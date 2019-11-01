@@ -2,37 +2,6 @@
 
 function uploadRepoFile($filePath, $fileContent, $message = 'Added file')
 {
-    $request = new HttpRequest();
-    $request->setUrl('https://api.github.com/repos/PonomareVlad/OGLinks/contents/' . $filePath);
-    $request->setMethod(HTTP_METH_PUT);
-
-    $request->setHeaders(array(
-        'cache-control' => 'no-cache',
-        'Connection' => 'keep-alive',
-        'Content-Length' => '152',
-        'Accept-Encoding' => 'gzip, deflate',
-        'Host' => 'api.github.com',
-        'Postman-Token' => '98ee36f1-d4e6-4290-bd44-0643b2c196cd,602cc6b6-c8fa-4295-aec5-fce0d76f2f8b',
-        'Cache-Control' => 'no-cache',
-        'Accept' => '*/*',
-        'User-Agent' => 'PostmanRuntime/7.18.0',
-        'Authorization' => 'Bearer 381e4be5a6091e662250831424993f8d31585006',
-        'Content-Type' => 'application/json'
-    ));
-
-    $request->setBody();
-
-    try {
-        $response = $request->send();
-
-        return $response->getBody();
-    } catch (HttpException $ex) {
-        return $ex;
-    }
-}
-
-function uploadRepoFile2($filePath, $fileContent, $message = 'Added file')
-{
     $postdata = '{
   "message": "' . $message . '",
   "committer": {
@@ -47,7 +16,6 @@ function uploadRepoFile2($filePath, $fileContent, $message = 'Added file')
             'method' => 'PUT',
             'header' => "Content-Type: application/json\r\n" .
                 "Cache-Control: no-cache\r\n" .
-                "Connection: keep-alive\r\n" .
                 "Accept-Encoding: gzip, deflate\r\n" .
                 "Postman-Token: 98ee36f1-d4e6-4290-bd44-0643b2c196cd,602cc6b6-c8fa-4295-aec5-fce0d76f2f8b\r\n" .
                 "Accept: */*\r\n" .
@@ -69,6 +37,17 @@ function createPage($targetUrl, $imgUrl, $title)
     return ob_get_clean();
 }
 
+$data = $_REQUEST;
+
 if (!isset($_REQUEST['url'], $_REQUEST['image'], $_REQUEST['title'], $_REQUEST['path'])) exit('Error in parameters');
 
-exit(uploadRepoFile2($_REQUEST['path'], createPage($_REQUEST['url'], $_REQUEST['image'], $_REQUEST['title']), $_REQUEST['url']));
+/*$data = json_decode('{
+"url":"https://www.instagram.com/ponomarevlad/"
+"image":https://avatars1.githubusercontent.com/u/2877584"
+"title":Владислав Пономарев"
+"path":instagram.html"
+}');*/
+
+//echo print_r($data, true);
+
+echo(uploadRepoFile($data['path'], createPage($data['url'], $data['image'], $data['title']), $data['url']));
