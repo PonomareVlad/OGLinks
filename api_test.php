@@ -20,14 +20,7 @@ function uploadRepoFile($filePath, $fileContent, $message = 'Added file')
         'Content-Type' => 'application/json'
     ));
 
-    $request->setBody('{
-  "message": "' . $message . '",
-  "committer": {
-    "name": "PonomareVlad",
-    "email": "git@ponomarevlad.ru"
-  },
-  "content": "' . base64_encode($fileContent) . '"
-}');
+    $request->setBody();
 
     try {
         $response = $request->send();
@@ -36,6 +29,31 @@ function uploadRepoFile($filePath, $fileContent, $message = 'Added file')
     } catch (HttpException $ex) {
         return $ex;
     }
+}
+
+function uploadRepoFile2($filePath, $fileContent, $message = 'Added file')
+{
+    $postdata = '{
+  "message": "' . $message . '",
+  "committer": {
+    "name": "PonomareVlad",
+    "email": "git@ponomarevlad.ru"
+  },
+  "content": "' . base64_encode($fileContent) . '"
+}';
+
+    $opts = array('http' =>
+        array(
+            'method' => 'PUT',
+            'header' => "Content-Type: application/json\r\n" .
+                "Authorization: Bearer 381e4be5a6091e662250831424993f8d31585006\r\n",
+            'content' => $postdata
+        )
+    );
+
+    $context = stream_context_create($opts);
+
+    return $result = file_get_contents('https://api.github.com/repos/PonomareVlad/OGLinks/contents/' . $filePath, false, $context);
 }
 
 function createPage($targetUrl, $imgUrl, $title)
@@ -47,4 +65,4 @@ function createPage($targetUrl, $imgUrl, $title)
 
 if (!isset($_REQUEST['url'], $_REQUEST['image'], $_REQUEST['title'], $_REQUEST['path'])) exit('Error in parameters');
 
-exit(uploadRepoFile($_REQUEST['path'], createPage($_REQUEST['url'], $_REQUEST['image'], $_REQUEST['title']), $_REQUEST['url']));
+exit(uploadRepoFile2($_REQUEST['path'], createPage($_REQUEST['url'], $_REQUEST['image'], $_REQUEST['title']), $_REQUEST['url']));
