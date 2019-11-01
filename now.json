@@ -1,0 +1,15 @@
+{
+  "regions": [
+    "cdg1"
+  ],
+  "public": false,
+  "builds": [
+    {
+      "src": "api_test.php",
+      "use": "@aureox/now-php-extra",
+      "config": {
+        "maxLambdaSize": "100mb"
+      }
+    }
+  ]
+}
