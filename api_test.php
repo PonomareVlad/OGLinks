@@ -20,7 +20,7 @@ function uploadRepoFile($filePath, $fileContent, $message = 'Added file')
                 "Postman-Token: 98ee36f1-d4e6-4290-bd44-0643b2c196cd,602cc6b6-c8fa-4295-aec5-fce0d76f2f8b\r\n" .
                 "Accept: */*\r\n" .
                 "User-Agent: PostmanRuntime/7.18.0\r\n" .
-                "Authorization: Bearer 381e4be5a6091e662250831424993f8d31585006\r\n",
+                "Authorization: Bearer 66866baac569bc9fd3c8ed0341a23a2c7864126d\r\n",
             'content' => $postdata
         )
     );
