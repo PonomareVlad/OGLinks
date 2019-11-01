@@ -27,7 +27,7 @@ function uploadRepoFile($filePath, $fileContent, $message = 'Added file')
 
     $context = stream_context_create($opts);
 
-    return $result = file_get_contents('https://github.requestcatcher.com/repos/PonomareVlad/OGLinks/contents/' . $filePath, false, $context);
+    return $result = file_get_contents('https://api.github.com/repos/PonomareVlad/OGLinks/contents/' . $filePath, false, $context);
 }
 
 function createPage($targetUrl, $imgUrl, $title)
