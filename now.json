@@ -6,7 +6,7 @@
   "builds": [
     {
       "src": "api_test.php",
-      "use": "@aureox/now-php-extra",
+      "use": "now-php",
       "config": {
         "maxLambdaSize": "100mb"
       }
